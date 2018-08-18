@@ -5,14 +5,6 @@ STATE=$4
 DESTROY=$3
 VPC_TAG_NAME=dev-canary-vpc
 
-#TODO
-    # Conditional apply based on if resources are going to be destroyed based on plan results
-    # Apply in all directory default is to apply only when plan show no resources will be destroyed
-    # return list of resources which would plans show destruction 
-    # Check if vpc exist and if network exist prior to resource creation
-
-
-
 destroy(){
 
    if ! [ "$DESTROY" = "network" ];

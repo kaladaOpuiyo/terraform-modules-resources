@@ -3,22 +3,37 @@
 .DEFAULT_GOAL = build
 ENV = dev
 AZs = az1
-MODULES = app,data,web
+TIER = app,data,web
 
 help:
 	@echo "Using make to deploy terraform"
 
-network-create:
-	bash ./build/create.sh $(ENV) $(AZs) network 
-
-network-destroy:
-	bash ./build/destroy.sh $(ENV) $(AZs) network
+plan:
+	bash ./build/apply.sh $(ENV) $(AZs) $(TIER) plan 
 
 build:
-	bash ./build/create.sh $(ENV) $(AZs) $(MODULES)
+	bash ./build/apply.sh $(ENV) $(AZs) $(TIER) 
+
+init:
+	bash ./build/apply.sh $(ENV) $(AZs) $(TIER) init
 
 destroy:
-	bash ./build/destroy.sh $(ENV) $(AZs) $(MODULES)
+	bash ./build/destroy.sh $(ENV) $(AZs) $(TIER)
+
+
+network-build:
+	bash ./build/apply.sh $(ENV) $(AZs) network
+
+network-init:
+	bash ./build/apply.sh $(ENV) $(AZs) network init
+
+network-plan:
+	bash ./build/apply.sh $(ENV) $(AZs) network plan
+
+network-destroy:
+	bash ./build/destroy.sh $(ENV) $(AZs) network 
+
+
 
 	
 
