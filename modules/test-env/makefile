@@ -1,34 +1,34 @@
-.PHONY: help build destroy network-create network-destroy
+.PHONY: help plan init build destroy network-build network-destroy network-plan network-init
 
 .DEFAULT_GOAL = build
 ENV = dev
 AZs = az1
-TIER = app,data,web
+TIERs = app,data,web
 
 help:
 	@echo "Using make to deploy terraform"
 
 plan:
-	bash ./build/apply.sh $(ENV) $(AZs) $(TIER) plan 
+	bash ./build/action.sh $(ENV) $(AZs) $(TIERs) plan 
 
 build:
-	bash ./build/apply.sh $(ENV) $(AZs) $(TIER) 
+	bash ./build/action.sh $(ENV) $(AZs) $(TIERs) 
 
 init:
-	bash ./build/apply.sh $(ENV) $(AZs) $(TIER) init
+	bash ./build/action.sh $(ENV) $(AZs) $(TIERs) init
 
 destroy:
-	bash ./build/destroy.sh $(ENV) $(AZs) $(TIER)
+	bash ./build/destroy.sh $(ENV) $(AZs) $(TIERs)
 
 
 network-build:
-	bash ./build/apply.sh $(ENV) $(AZs) network
+	bash ./build/action.sh $(ENV) $(AZs) network
 
 network-init:
-	bash ./build/apply.sh $(ENV) $(AZs) network init
+	bash ./build/action.sh $(ENV) $(AZs) network init
 
 network-plan:
-	bash ./build/apply.sh $(ENV) $(AZs) network plan
+	bash ./build/action.sh $(ENV) $(AZs) network plan
 
 network-destroy:
 	bash ./build/destroy.sh $(ENV) $(AZs) network 

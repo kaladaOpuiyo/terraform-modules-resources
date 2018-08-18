@@ -58,7 +58,8 @@ resource "aws_instance" "aux_instance" {
     ignore_changes = ["user_data"]
   }
 }
-
+#TODO Create aws_network_interface which allows for the creation of multiple resources with 
+# varying sec group settings 
 resource "aws_network_interface" "primary" {
   count = "${var.instances_total}"
 
