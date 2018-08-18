@@ -7,7 +7,6 @@ data "aws_vpc" "aux_vpc" {
   }
 }
 
-
 ##########################################################################
 # aux Subnet
 ##########################################################################
@@ -16,6 +15,14 @@ data "aws_subnet" "aux_subnet" {
 
   tags {
     Name = "${var.subnet_name}"
+  }
+}
+
+data "aws_network_interface" "aux_eni_primary" {
+  count = 0
+
+  tags {
+    Name = "${var.attached_eni_name}"
   }
 }
 
@@ -40,8 +47,11 @@ resource "aws_instance" "aux_instance" {
   user_data = "${var.user_file}"
 
   network_interface {
-    network_interface_id = "${element(aws_network_interface.primary.*.id, count.index)}"
-    device_index         = 0
+
+    network_interface_id = "${var.create_primary? 
+                              element(aws_network_interface.primary.*.id, count.index):
+                              join("",data.aws_network_interface.aux_eni_primary.*.id)}"
+    device_index = 0
   }
 
   lifecycle {
@@ -80,20 +90,21 @@ resource "aws_security_group_rule" "aux_ports_inbound" {
   security_group_id = "${element(aws_security_group.aux.*.id, count.index)}"
   type              = "ingress"
   from_port         = "${replace(lookup(var.ports["${element(keys(var.ports),count.index)}"], "port_numbers") , "/^.*-.*/", 
-                         element(split("-", lookup(var.ports["${element(keys(var.ports),count.index)}"], "port_numbers")), 0))}"
-  to_port           = "${replace(lookup(var.ports["${element(keys(var.ports),count.index)}"], "port_numbers") , "/^.*-.*/", 
-                         element(split("-", lookup(var.ports["${element(keys(var.ports),count.index)}"], "port_numbers")), 1))}"
-  protocol          = "tcp"
-  cidr_blocks       = ["${lookup(var.ports["${element(keys(var.ports),count.index)}"], "cidr_range")}"]
+                        element(split("-", lookup(var.ports["${element(keys(var.ports),count.index)}"], "port_numbers")), 0))}"
+
+  to_port = "${replace(lookup(var.ports["${element(keys(var.ports),count.index)}"], "port_numbers") , "/^.*-.*/", 
+                        element(split("-", lookup(var.ports["${element(keys(var.ports),count.index)}"], "port_numbers")), 1))}"
+
+  protocol    = "tcp"
+  cidr_blocks = ["${lookup(var.ports["${element(keys(var.ports),count.index)}"], "cidr_range")}"]
 }
 
 resource "aws_security_group_rule" "aux_ports_outbound" {
   count             = "${var.instances_total}"
   security_group_id = "${element(aws_security_group.aux.*.id, count.index)}"
-  type        = "egress"
-  from_port   = 0
-  to_port     = 0
-  protocol    = "-1"
-  cidr_blocks = ["0.0.0.0/0"]
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
 }
-

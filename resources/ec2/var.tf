@@ -1,4 +1,3 @@
-
 variable "az" {
   description = "az"
 }
@@ -9,13 +8,12 @@ variable "tag_name" {
 
 variable "ports" {
   description = "ports"
-  default = {} 
+  default     = {}
 }
 
 variable "key_name" {
   description = "key_name"
 }
-
 
 variable "env" {
   description = "env"
@@ -49,3 +47,12 @@ variable "ami" {
   description = "ami"
 }
 
+
+variable "create_primary" {
+  description = "create_primary"
+}
+
+
+variable "attached_eni_name" {
+  description = "attached_eni_name"
+}

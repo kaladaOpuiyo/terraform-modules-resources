@@ -15,7 +15,7 @@ variable "release" {
 }
 
 module "aws_config" {
-  source = "../../../resources/config/common"
+  source = "../../../../resources/config/common"
 }
 
 ##########################################################################
@@ -23,7 +23,7 @@ module "aws_config" {
 ##########################################################################
 
 module "aws_vpc" {
-  source = "../../../resources/vpc"
+  source = "../../../../resources/vpc"
 
   vpc_cidr              = "10.111.0.0/16"
   enable_dns_support    = true

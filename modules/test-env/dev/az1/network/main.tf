@@ -21,7 +21,7 @@ variable "release" {
 
 
 module "aws_config" {
-  source = "../../../../resources/config/common"
+  source = "../../../../../resources/config/common"
 }
 
 ##########################################################################
@@ -29,7 +29,7 @@ module "aws_config" {
 ##########################################################################
 
 module "aws_routes" {
-  source = "../../../../resources/network"
+  source = "../../../../../resources/network"
 
 
   project = "${var.env}-${var.release}"

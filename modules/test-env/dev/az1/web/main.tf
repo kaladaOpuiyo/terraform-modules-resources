@@ -23,7 +23,7 @@ variable "tier" {
 }
 
 module "aws_config" {
-  source = "../../../../resources/config/common/"
+  source = "../../../../../resources/config/common/"
 }
 
 ##########################################################################
@@ -31,7 +31,7 @@ module "aws_config" {
 ##########################################################################
 
 module "aws_web" {
-  source = "../../../../resources/ec2/"
+  source = "../../../../../resources/ec2/"
 
   ##########################################################################
   # web Instances
@@ -48,6 +48,8 @@ module "aws_web" {
   vpc_name        = "${var.env}-${var.release}-vpc"
   user_file       = "${module.aws_config.user_file}"
   key_name        = "kalada-admin"
+  create_primary  = true
+  attached_eni_name        = ""
 
   ports = {
         
