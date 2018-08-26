@@ -12,7 +12,7 @@ plan:
 	bash ./build/action.sh $(ENV) $(AZs) $(TIERs) plan 
 
 build:
-	bash ./build/action.sh $(ENV) $(AZs) $(TIERs) 
+	bash ./build/action.sh $(ENV) $(AZs) $(TIERs) build 
 
 init:
 	bash ./build/action.sh $(ENV) $(AZs) $(TIERs) init
@@ -22,7 +22,7 @@ destroy:
 
 
 network-build:
-	bash ./build/action.sh $(ENV) $(AZs) network
+	bash ./build/action.sh $(ENV) $(AZs) network build
 
 network-init:
 	bash ./build/action.sh $(ENV) $(AZs) network init

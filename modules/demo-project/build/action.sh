@@ -8,6 +8,7 @@ VPC_TAG_NAME=
 
 #TODO 
     # Apply only if prior plan destroy == 0 
+    # You should seriously consider rewriting this in golang :) 
     # Check if vpc exist and if network exist prior to resource creation
 
 action(){
@@ -38,7 +39,7 @@ action(){
                                     terraformInit $VPC_DIR && terraformPlan $VPC_DIR && terraformApply $VPC_DIR && \
                                     terraformInit $module && terraformPlan $module && terraformApply $module;;
                                 *)
-                                    echo "ACTION=plan,init,build.C'mon dont be stupid";;
+                                    echo "ACTION=plan,init,build.C'mon dont be stupid network";;
                             esac  
                     fi
             done
@@ -56,7 +57,8 @@ action(){
         VPC_EXIST=true
         SUBNET_EXIST=true
 
-        if [[ $VPC_EXIST = true &&  $SUBNET_EXIST = true ]]; then
+        if [[ $VPC_EXIST = true && $SUBNET_EXIST = true ]]; then
+
             for module in $ENV_MODULES
                 do
                     NETWORK_MODULE=$(echo $module | grep network)
