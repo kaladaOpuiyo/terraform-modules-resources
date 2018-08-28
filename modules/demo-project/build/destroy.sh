@@ -1,6 +1,6 @@
 #!/bin/bash
 ENV=$1
-CREATE_ARRAY=',' read -a AZs <<< "$2"
+AZs=($(echo $2 | sed 's/,/ /g' ))
 STATE=$4
 DESTROY=$3
 VPC_TAG_NAME=dev-canary-vpc
@@ -9,7 +9,7 @@ destroy(){
 
    if ! [ "$DESTROY" = "network" ];
    then
-    for az in $AZs
+    for az in "${AZs[@]}"
         do
         ENV_MODULES=$(find ./$ENV/$az -name main.tf | sed -e 's/\(main.tf\)*$//g')
 
@@ -34,7 +34,7 @@ destroy(){
     if  [ "$DESTROY" = "network" ];
     then
 
-    for az in $AZs
+    for az in "${AZs[@]}"
         do
         ENV_MODULES=$(find ./$ENV/$az -name main.tf | sed -e 's/\(main.tf\)*$//g')
         echo $ENV_MODULES

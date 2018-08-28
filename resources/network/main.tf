@@ -42,7 +42,7 @@ resource "aws_route_table" "aux_route_table" {
   vpc_id = "${data.aws_vpc.aux_vpc.id}"
 
   tags {
-    Name        = "${var.project}-${element(var.route_tables, count.index)}-route-table"
+    Name        = "${var.project}-${var.az}-${element(var.route_tables, count.index)}-route-table"
     Environment = "${var.project}"
   }
 }
@@ -95,7 +95,7 @@ resource "aws_eip" "aux_ngw_eip" {
   vpc   = true
 
   tags = {
-    Name        = "${var.project}-ngw-eip"
+    Name        = "${var.project}-${var.az}-ngw-eip"
     Environment = "${var.project}"
   }
 
@@ -108,7 +108,7 @@ resource "aws_nat_gateway" "aux_ngw" {
   allocation_id = "${aws_eip.aux_ngw_eip.id}"
 
   tags = {
-    Name        = "${var.project}-ngw"
+    Name        = "${var.project}-${var.az}-ngw"
     Environment = "${var.project}"
   }
 
@@ -123,7 +123,7 @@ data "aws_route_table" "public" {
   count = "${contains(var.route_tables, "public") == true ? 1 : 0 }"
 
   tags {
-    Name = "${var.project}-public-route-table"
+    Name = "${var.project}-${var.az}-public-route-table"
   }
 
   depends_on = ["aws_route_table.aux_route_table"]
@@ -133,7 +133,7 @@ data "aws_route_table" "private" {
   count = "${contains(var.route_tables, "private") == true ? 1 : 0 }"
 
   tags {
-    Name = "${var.project}-private-route-table"
+    Name = "${var.project}-${var.az}-private-route-table"
   }
 
   depends_on = ["aws_route_table.aux_route_table"]

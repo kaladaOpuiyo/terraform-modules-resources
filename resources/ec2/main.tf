@@ -44,6 +44,7 @@ resource "aws_instance" "aux_instance" {
     Name = "${var.tag_name}"
   }
 
+  # user_data = "${element(data.template_file.aux_user_data.*.rendered, count.index)}"
   user_data = "${var.user_file}"
 
   network_interface {
@@ -58,6 +59,11 @@ resource "aws_instance" "aux_instance" {
     ignore_changes = ["user_data"]
   }
 }
+# data "template_file" "aux_user_data" {
+#   count = 1
+# template = "${file("${path.module}/user_data.sh")}"
+# }
+
 #TODO Create aws_network_interface which allows for the creation of multiple resources with 
 # varying sec group settings 
 resource "aws_network_interface" "primary" {

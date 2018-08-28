@@ -1,9 +1,11 @@
 #!/bin/bash
 ENV=$1
-CREATE_ARRAY=',' read -a AZs <<< "$2"
+#az1,az2 into az1 az2 
+AZs=($(echo $2 | sed 's/,/ /g' ))
 ACTION=$4
 BUILD=$3
 VPC_TAG_NAME=
+
 
 
 #TODO 
@@ -13,9 +15,11 @@ VPC_TAG_NAME=
 
 action(){
 
+
+
    if [ "$BUILD" = "network" ];
    then
-    for az in $AZs
+    for az in "${AZs[@]}"
         do
 
         VPC_DIR=./$ENV/vpc
@@ -49,7 +53,7 @@ action(){
     if ! [ "$BUILD" = "network" ];
     then
    
-    for az in $AZs
+    for az in "${AZs[@]}"
         do
 
         ENV_DIR=./$ENV/$az
@@ -110,5 +114,11 @@ terraformInit(){
   echo 'terraform not found' >&2
   exit 1
 fi
+   
+#    for az in ${AZs[@]}
+#     do 
+#        echo $az
+#     done
+
 
 action

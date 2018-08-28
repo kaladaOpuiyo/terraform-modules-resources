@@ -2,7 +2,7 @@
 
 .DEFAULT_GOAL = build
 ENV = dev
-AZs = az1
+AZs = az1,az2
 TIERs = app,data,web
 
 help:
