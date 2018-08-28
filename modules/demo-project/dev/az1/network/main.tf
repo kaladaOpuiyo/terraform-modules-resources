@@ -48,6 +48,11 @@ module "aws_routes" {
         cidr_block = "10.111.16.0/24"
         type       = "public"
       }
+
+      app = {
+        cidr_block = "10.111.32.0/24"
+        type       = "public"
+      }
     
   }
 
