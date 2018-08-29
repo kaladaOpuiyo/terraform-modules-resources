@@ -81,3 +81,4 @@ These command execute against all modules within *project/environment/availabili
 **Destroy modules:** `make destroy`
 
 
+check
