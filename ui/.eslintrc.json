@@ -1,0 +1,20 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "extends": ["uber-es2015", "eslint-config-uber-jsx"],
+  "rules": {
+    "consistent-return": 0,
+    "max-len": [1, 150, 4],
+    "max-params": ["error", 6],
+    "object-curly-spacing": 0,
+    "babel/object-curly-spacing": 2,
+    "no-console": 0,
+    "radix": 0,
+    "quote-props": 0,
+    "no-process-env": 0
+  },
+  "parser": "babel-eslint",
+  "plugins": ["babel"]
+}

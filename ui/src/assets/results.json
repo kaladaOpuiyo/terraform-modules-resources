@@ -1,0 +1,14 @@
+{
+  "Resources": null,
+  "Project": { "Name": "", "": "" },
+  "Modules": {
+    "ModulesFound": [
+      ["/dev/az1/app/", "/dev/az1/web/eni/", "/dev/az1/web/", "/dev/az1/data/"]
+    ],
+    "Totals": {
+      "TotalModulesFromPlan": "",
+      "TotalResourcesFromPlan": "",
+      "TotalProjectsFound": ""
+    }
+  }
+}
